@@ -10,11 +10,11 @@ const AskOutPage = () => {
           <div className="flex justify-center my-10">
             <img src="/cute.jpg" alt="cute photo" />
           </div>
-          <div className="flex justify-center mt-6 space-x-3">
-            <button className="px-6 py-3 font-semibold text-white bg-red-500 rounded-2xl hover:bg-red-600 transition">
+          <div className="flex justify-center mt-6 space-x-2">
+            <button className="px-6 py-3 font-semibold text-white bg-red-500 rounded-3xl hover:bg-red-600 transition">
               Yes I'd love to
             </button>
-            <button className="px-6 py-3 font-semi-bold text-white bg-gray-500 rounded-2xl hover:bg-gray-600 transition">
+            <button className="px-6 py-3 font-semi-bold text-white bg-gray-500 rounded-3xl hover:bg-gray-600 transition">
               No
             </button>
           </div>
