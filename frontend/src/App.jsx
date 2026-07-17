@@ -1,9 +1,9 @@
-import AskOut from "./components/AskOut";
+import AskOutPage from "./pages/AskOutPage";
 
 function App() {
   return (
     <>
-      <AskOut />
+      <AskOutPage />
       <div></div>
     </>
   );
