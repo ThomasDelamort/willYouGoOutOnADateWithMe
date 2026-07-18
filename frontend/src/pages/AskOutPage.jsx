@@ -1,11 +1,29 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Layout from "../components/Layout";
 import { useNavigate } from "react-router-dom";
 
 const AskOutPage = () => {
-  const [y, setY] = useState();
-  const [x, setX] = useState();
+  const [y, setY] = useState(0);
+  const [x, setX] = useState(0);
   const navigate = useNavigate();
+  const noBtnRef = useRef(null);
+
+  const dodge = () => {
+    const btn = noBtnRef.current;
+    if (!btn) return;
+    const rect = btn.getBoundingClientRect();
+
+    const maxLeft = -rect.left + 8;
+    const maxRight = window.innerWidth - rect.right - 8;
+    const maxUp = -rect.top + 8;
+    const maxDown = window.innerHeight - rect.bottom - 8;
+
+    const dx = x + Math.random() * (maxRight - maxLeft) + maxLeft;
+    const dy = y + Math.random() * (maxDown - maxUp) + maxUp;
+
+    setX(dx);
+    setY(dy);
+  };
 
   return (
     <Layout>
@@ -24,10 +42,8 @@ const AskOutPage = () => {
           Yes I'd love to
         </button>
         <button
-          onMouseEnter={() => {
-            setY(Math.floor(Math.random() * 350));
-            setX(Math.floor(Math.random() * 700));
-          }}
+          ref={noBtnRef}
+          onMouseEnter={dodge}
           style={{
             transform: `translate(${x}px, ${y}px)`,
           }}
