@@ -9,8 +9,8 @@ const SetDateFirstPage = () => {
 
   return (
     <Layout>
-      <h1 className="font-serif text-4xl font-bold text-center text-rose-900 mb-8 leading-tight">
-        So... when are you free? 📝🐾
+      <h1 className="text-4xl font-extrabold text-center mb-8 leading-tight">
+        🌸 When you<span className="text-red-400"> free?</span> 🌸
       </h1>
       <DatePickerForm onSubmit={handleSubmit} />
     </Layout>

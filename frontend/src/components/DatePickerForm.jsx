@@ -181,7 +181,7 @@ const DatePickerForm = ({ onSubmit }) => {
         type="button"
         onClick={handleSubmit}
         disabled={!selected || !time}
-        className="mt-4 w-full py-4 font-semibold text-white rounded-3xl bg-linear-to-r from-pink-700 to-pink-400 shadow-md transition-all duration-200 hover:shadow-xl hover:scale-[1.02] active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
+        className="mt-4 w-full py-4 font-semibold text-white rounded-3xl bg-linear-to-r from-pink-500 to-pink-200 shadow-md transition-all duration-200 hover:shadow-xl hover:scale-[1.02] active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
       >
         Set the date ❤️
       </button>
