@@ -72,7 +72,7 @@ const DatePickerForm = ({ onSubmit }) => {
       <p className="text-gray-700 font-medium mb-3">Pick a day</p>
 
       {/* Calendar card */}
-      <div className="border border-gray-200 rounded-2xl p-4 shadow-sm">
+      <div className="border border-gray-200 rounded-2xl p-3 sm:p-4 shadow-sm">
         {/* Month header */}
         <div className="flex items-center justify-between mb-4">
           <button
@@ -83,7 +83,7 @@ const DatePickerForm = ({ onSubmit }) => {
           >
             ‹
           </button>
-          <span className="font-semibold text-gray-800">
+          <span className="font-semibold text-gray-800 text-sm sm:text-base">
             {MONTHS[month]} {year}
           </span>
           <button
@@ -101,7 +101,7 @@ const DatePickerForm = ({ onSubmit }) => {
           {DAYS.map((d) => (
             <div
               key={d}
-              className="text-center text-xs font-medium text-gray-400 py-1"
+              className="text-center text-[11px] sm:text-xs font-medium text-gray-400 py-1"
             >
               {d}
             </div>
@@ -124,7 +124,7 @@ const DatePickerForm = ({ onSubmit }) => {
                 disabled={isPast}
                 onClick={() => setSelected(day)}
                 className={[
-                  "h-10 rounded-full text-sm transition-colors",
+                  "aspect-square flex items-center justify-center rounded-full text-xs sm:text-sm transition-colors",
                   isPast && "text-gray-300 cursor-not-allowed",
                   !isPast && !isSelected && "text-gray-700 hover:bg-pink-100",
                   isSelected &&
@@ -143,7 +143,7 @@ const DatePickerForm = ({ onSubmit }) => {
 
       {/* Time slots */}
       <p className="text-gray-700 font-medium mt-6 mb-3">What time?</p>
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
         {TIME_SLOTS.map((slot) => {
           const isSelected = time === slot;
           return (
@@ -152,7 +152,7 @@ const DatePickerForm = ({ onSubmit }) => {
               type="button"
               onClick={() => setTime(slot)}
               className={[
-                "py-2 rounded-full text-sm border transition-all",
+                "py-2 rounded-full text-xs sm:text-sm border transition-all",
                 isSelected
                   ? "bg-linear-to-r from-pink-600 to-pink-400 text-white border-transparent font-semibold shadow-md"
                   : "bg-white text-gray-700 border-gray-200 hover:border-pink-300 hover:bg-pink-50",
@@ -181,7 +181,7 @@ const DatePickerForm = ({ onSubmit }) => {
         type="button"
         onClick={handleSubmit}
         disabled={!selected || !time}
-        className="mt-4 w-full py-4 font-semibold text-white rounded-3xl bg-linear-to-r from-pink-500 to-pink-200 shadow-md transition-all duration-200 hover:shadow-xl hover:scale-[1.02] active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
+        className="mt-4 w-full py-3.5 sm:py-4 font-semibold text-white rounded-3xl bg-linear-to-r from-pink-500 to-pink-200 shadow-md transition-all duration-200 hover:shadow-xl hover:scale-[1.02] active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
       >
         Set the date ❤️
       </button>

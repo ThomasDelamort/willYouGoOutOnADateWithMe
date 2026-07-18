@@ -4,7 +4,6 @@ import DatePickerForm from "../components/DatePickerForm";
 const SetDateFirstPage = () => {
   const handleSubmit = ({ date, time }) => {
     console.log("Date set:", date, time);
-    // e.g. navigate("/confirmed", { state: { date, time } });
   };
 
   return (
