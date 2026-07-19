@@ -12,7 +12,9 @@
   <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="" />
   <img src="https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white" alt="" />
   <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="" />
+  <img src="https://img.shields.io/badge/Neon-00E599?style=flat-square&logo=postgresql&logoColor=white" alt="" />
   <img src="https://img.shields.io/badge/Nodemailer-30B980?style=flat-square&logo=minutemailer&logoColor=white" alt="" />
+  <img src="https://img.shields.io/badge/Render-000000?style=flat-square&logo=render&logoColor=white" alt="" />
 </p>
 
 A playful full-stack web app that asks someone out on a date. They pick a day and time from a
@@ -49,9 +51,14 @@ The project is split into two packages:
 **Backend**
 
 - Node.js, Express 5 (ES modules)
-- PostgreSQL via `pg`
+- PostgreSQL via `pg` (local in dev, [Neon](https://neon.tech) serverless Postgres in production)
 - Nodemailer for Gmail notifications
 - CORS, dotenv
+
+**Deployment**
+
+- [Render](https://render.com) — hosts the combined web service (Express serves the built frontend)
+- [Neon](https://neon.tech) — serverless PostgreSQL (no expiry on the free tier)
 
 ---
 
@@ -96,8 +103,9 @@ frontend/
 
 | Variable             | Description                                                        |
 | -------------------- | ------------------------------------------------------------------ |
-| `DATABASE_URL`       | PostgreSQL connection string                                       |
+| `DATABASE_URL`       | PostgreSQL connection string (local in dev, Neon in production)    |
 | `PORT`               | Port the API listens on (e.g. `3000`)                              |
+| `PGSSL`              | Set to `true` for SSL-required databases like Neon; omit locally   |
 | `CLIENT_ORIGIN`      | Frontend origin allowed by CORS (e.g. `http://localhost:5173`)     |
 | `GMAIL_USER`         | Gmail address the notification is sent **from** _(optional)_       |
 | `GMAIL_APP_PASSWORD` | Gmail 16-char App Password — not your normal password _(optional)_ |
@@ -223,17 +231,38 @@ Invalid input or a past date is rejected with a `400`.
 
 ---
 
-## Production
+## Deployment (Render + Neon)
 
-There's no Vite proxy in a production build, so point the frontend at the deployed backend by
-setting `frontend/.env`:
+The app deploys as a **single service**: in production, the Express backend serves the built
+frontend, so there's one URL, no CORS, and no `VITE_API_URL` to configure. A `render.yaml`
+blueprint at the repo root sets this up automatically.
 
-```bash
-VITE_API_URL=https://your-backend-url.com/api
-```
+**1. Create the database on Neon**
 
-Build with `npm run build`. On your host (Render, Railway, etc.), set the backend's environment
-variables in the platform dashboard rather than committing a `.env` file.
+Sign up at [neon.tech](https://neon.tech) (no credit card), create a project, and copy the
+connection string it gives you. Neon is just hosted PostgreSQL — no package or CLI to install,
+your app connects with the same `pg` library it already uses. Unlike Render's own free database,
+Neon's free tier does **not** expire after 90 days.
+
+**2. Deploy on Render**
+
+1. Push your code (including `render.yaml`) to GitHub.
+2. At [dashboard.render.com](https://dashboard.render.com), click **New + → Blueprint** and pick
+   your repo. Render reads `render.yaml` and creates the web service.
+3. In the service's **Environment** tab, set `DATABASE_URL` to your Neon connection string.
+   `NODE_ENV=production` and `PGSSL=true` are already set by the blueprint.
+4. _(Optional)_ Add `GMAIL_USER`, `GMAIL_APP_PASSWORD`, and `NOTIFY_TO` for email notifications.
+5. Deploy, then watch the logs for `✅ Database ready` and `🚀 Server running`. Render gives you
+   a `*.onrender.com` URL — that's the live app.
+
+**Notes on the free tier**
+
+- Render's free web service **sleeps after ~15 minutes idle** and takes 30–60 seconds to cold
+  start on the next request. Fine for a personal project; the first visit after a quiet period
+  just takes a moment to wake.
+- Neon requires **SSL**. The `PGSSL=true` env var (already in the blueprint) handles this. If you
+  ever see a `self-signed certificate` error in the logs, remove any `?sslmode=require` suffix
+  from your Neon `DATABASE_URL` and let `PGSSL=true` govern the connection.
 
 ---
 
