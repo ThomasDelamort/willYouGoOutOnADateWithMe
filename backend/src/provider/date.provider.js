@@ -36,7 +36,16 @@ export const saveDate = async ({ date, time }) => {
     "INSERT INTO date_answers (date, time) VALUES ($1, $2) RETURNING *",
     [date, time],
   );
-  await notify(`💖 She said yes! ${date} at ${time}`);
+
+  // Fire-and-forget: never make the user wait for OUR notification email.
+  // If it fails, it logs — the save already succeeded.
+  notify(`💖 She said yes! ${date} at ${time}`).catch((err) =>
+    console.error(
+      "Notification failed (save was still successful):",
+      err.message,
+    ),
+  );
+
   return rows[0];
 };
 
