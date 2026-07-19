@@ -2,7 +2,10 @@ import { useRef, useState } from "react";
 import Layout from "../components/Layout";
 import DatePickerForm from "../components/DatePickerForm";
 
-const API = import.meta.env.VITE_API_URL || "/api";
+// Same-origin: the frontend is served by the same Render service as the API,
+// so always call the relative "/api" path. (Do NOT use an absolute onrender
+// URL here — a cross-origin POST to the same service can hang/abort.)
+const API = "/api";
 
 const toYMD = (d) => {
   const year = d.getFullYear();
@@ -69,7 +72,6 @@ const SetDateFirstPage = () => {
     }
   };
 
-  // Success screen
   if (status === "success" && confirmed) {
     const pretty = new Date(confirmed.date + "T00:00:00").toLocaleDateString(
       undefined,
