@@ -82,6 +82,13 @@ const SetDateFirstPage = () => {
         <div className="text-center py-6">
           <div className="text-5xl mb-4">💌</div>
           <h1 className="text-3xl font-extrabold mb-3">It's a date!</h1>
+          <div className="flex justify-center my-6">
+            <img
+              src="/milkmocha.gif"
+              alt="cute gif"
+              style={{ width: "250px", height: "auto" }}
+            />
+          </div>
           <p className="text-gray-600">
             See you on{" "}
             <span className="font-semibold text-pink-600">{pretty}</span> at{" "}

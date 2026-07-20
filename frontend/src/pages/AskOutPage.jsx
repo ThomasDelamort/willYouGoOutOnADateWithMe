@@ -32,7 +32,11 @@ const AskOutPage = () => {
         <span className="text-red-400">date</span> with me?
       </h1>
       <div className="flex justify-center my-10">
-        <img src="/cute.jpg" alt="cute photo" />
+        <img
+          src="/cute2.gif"
+          alt="cute gif"
+          style={{ width: "250px", height: "auto" }}
+        />
       </div>
       <div className="flex justify-center mt-6 space-x-2">
         <button
